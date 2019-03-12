@@ -1,0 +1,27 @@
+nfs
+SERVER
+apt-get install common
+apt-get install nfs-kernel-server
+Primer s’ha de crear la carpeta /exports i a dins les carpetes que voldrem compartir. Si volem compartir /home,
+haurem de crear la carpeta /exports i la carpeta /exports/home
+mount /home /exports/home --bind
+nano /etc/exports
+/exports 10.1.6.0/24 (rw,fsid=0,no_subtree_check,sync)
+/exports/home 10.1.6.0/24 (rw,nohide,insecure,no_subtree_check,sync)
+exports -arv
+CLIENT
+apt-get install nfs-common
+mkdir /mnt/exports
+mount 10.1.6.server:/exports/home /mnt/exports
+umount /mnt/exports
+mount -a
+AUTOFS
+apt-get install autofs
+nano /etc/auto.master
+/exports /etc/auto.nfs
+nano /etc/auto.nfs
+home -fstype=nfs4 debian-server:/exports/home
+nano /etc/default/nfs-common
+Need_idmapd=yes
+need_gssd=no
+service autofs restart
