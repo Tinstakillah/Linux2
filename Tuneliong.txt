@@ -1,0 +1,6 @@
+Crea un túnnel SSH del client al servidor (ho has de fer a la terminal del client)
+Podem fer servir qualsevol número de port per sobre del 1024 i
+que no estigui ocupat per cap altre servei per exemple el 4500
+ssh -L 4500:127.0.0.1:23 ip_del_servidor
+netstat -ant | grep 4500
+telnet localhost 4500
