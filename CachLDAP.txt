@@ -1,0 +1,71 @@
+# LDAP
+  /etc/hostname --> rros-server //  rros-client
+  /etc/hostname --> rros-client // 10.1.6.89 rros.lan
+  #SERVER
+    sudo apt-get install slapd ldap-utils
+    sudo dpkg-reconfigure -plow slapd
+    sudo apt-get install phpldapadmin
+    nano add_content.ldif
+    dn: ou=usuaris,dc=asix2,dc=cat
+    objectClass: organizationalUnit
+    ou: usuaris
+
+    dn: ou=grups,dc=asix2,dc=cat
+    objectClass: organizationalUnit
+    ou: Grups
+
+    dn: cn=alumnes,ou=grups,dc=asix2,dc=cat
+    objectClass: posixGroup
+    cn: alumnes
+    gidNumber: 5000
+
+    dn: uid=donaldtrump,ou=usuaris,dc=asix2,dc=cat
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: donaldtrump
+    sn: Trump
+    givenName: Donald
+    cn: Donald Trump
+    displayName: Donald Trump
+    uidNumber: 10000
+    gidNumber: 5000
+    userPassword: donaldtrumpldap
+    gecos: Donald Trump
+    loginShell: /bin/bash
+    homeDirectory: /home/trump_donald
+
+    systemctl restart sladp
+    ldapadd -x -D cn=admin,dc=asix2,dc=cat -W -f add_content.ldif
+    /etc/phpldapadmin/config.php --> $servers->setValue('server','base',array('dc=example,dc=com'))
+    localhost/phpldapadmin/
+
+    SEGONA PART
+
+    sudo apt-get install libnss-ldap ldap-utils libpam-ldap nslcd libnss-db nscd nss-updatedb
+    Contesteu les preguntes de configuració:
+    Quan us demani el servidor, poseu ldap://ip-del-servidor
+    Doneu-li la ip del servidor i el domini dc=asix2,dc=cat quan us ho demani.
+    Quan us demani un compte d'usuari administrador, podeu donar-li l'admin:
+    cn=admin,dc=asix2,dc=cat
+    Hace falta un usuario para acceder a la base de datos de LDAP? No
+
+    nano /usr/share/pam-configs/mkhomedir
+    Name: Create home directory during login
+    Default: yes
+    Priority: 900
+    Session-Type: Additional
+    Session: required        pam_mkhomedir.so umask=0022 skel=/etc/skel
+
+    pam-auth-update
+
+    nano /etc/nsswitch.conf
+    passwd: compat ldap
+    group : compat ldap
+    shadow: compat ldap
+
+    apt-get install php-xml
+    systemctl restart apache2
+
+    CLIENT PROVA --> getent passwd
+fer su donal
