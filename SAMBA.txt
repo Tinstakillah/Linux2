@@ -1,0 +1,29 @@
+Apt-get install samba samba-common cifs-utils
+Adduser cap1
+Adduser treballador1
+Smbpasswd cap1
+Pdbedit -L
+[public]
+browseable = yes
+path = /home/samba/public
+guest ok = yes
+read only = yes
+
+[projects]
+
+browseable = yes
+path = /home/samba/projectes
+write list = cap1
+writeable = yes
+valid users = cap1, treballador1
+read list = treballador1
+create mode = 770
+
+testparm
+Connexió des d’un client Windows
+Poner permisos a la carpeta /home/projectes 777
+
+Connexió des d’un client linux (entorn gràfic)
+Apt-get install gvfs*
+
+SMB://10.1.6.62/projects
