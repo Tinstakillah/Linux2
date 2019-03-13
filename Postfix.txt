@@ -1,0 +1,54 @@
+HACER EL DNS O EL HOSTS
+apt-get install postfix
+darle sitio de internet
+apt-get install postfix-doc
+apt-get install	postfix-pcre
+nano /etc/postfix/main.cf
+mydestination = marc.lan
+mynetworks = 127.0.0.1/24, 10.1.6.0/24
+systemctl restart postfix
+pugui identificar-se a si mateix com un servidor compatible amb les extensions SMTP,
+telnet 127.0.0.1 25
+ehlo hola
+
+useradd -m -s /bin/bash fmaster
+passwd fmaster
+apt-get install mailutils
+telnet localhost 25
+HELO pepe enter
+MAIL FROM: root@marc.lan enter
+RCTP TO:fmaster@marc.lan enter
+DATA enter
+SUBJECT: SOY EL TITULO
+
+HOLA MARC
+.enter
+entramos al fmaster
+su master
+mail
+1
+mbox
+
+COURIER
+Apt-get install courier-imap
+no
+nano /etc/postfix/main.cf
+home_mailbox = Maildir/
+mail_spool_directory= /home
+Systemctl restart postfix
+adduser new1
+cd /etc/courierpw2userdb > userdb
+chmod 700 userdb
+makeuserdb
+nano /etc/courier/imapd
+IMAP_MAILBOX_SANITY_CHECK=0
+nano /etc/courier/authdaemonrc
+authmodulelist=”authpam”
+Systemctl restart courier-imap
+Systemctl restart courier-authdaemon
+telnet localhost 25
+MAIL FROM: new1@marc.lan
+RCTP TO: new2@marc.lan
+y lo mismo
+telnet localhost 143
+0 login new2 super3
