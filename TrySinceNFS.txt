@@ -2,14 +2,20 @@ nfs
 SERVER
 apt-get install common
 apt-get install nfs-kernel-server
-Primer s’ha de crear la carpeta /exports i a dins les carpetes que voldrem compartir. Si volem compartir /home,
+Primer sâ€™ha de crear la carpeta /exports i a dins les carpetes que voldrem compartir. Si volem compartir /home,
 haurem de crear la carpeta /exports i la carpeta /exports/home
 mount /home /exports/home --bind
 nano /etc/exports
 /exports 10.1.6.0/24 (rw,fsid=0,no_subtree_check,sync)
 /exports/home 10.1.6.0/24 (rw,nohide,insecure,no_subtree_check,sync)
+per el autofs
+nano /etc/exports
+/exports/tmp 10.1.6.0/24(rw,fsid=1,no_subtree_check,sync)
+nano fstab
+/tmp /exports/tmp ext4 defaults,bind 0 0
 exports -arv
 CLIENT
+poner el host del server
 apt-get install nfs-common
 mkdir /mnt/exports
 mount 10.1.6.server:/exports/home /mnt/exports
