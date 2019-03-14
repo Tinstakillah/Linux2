@@ -1,0 +1,2 @@
+named-checkzone marc.lan /etc/bind/db.marc.lan 
+116 named-checkzone 1.6.10.in-addr.arpa /etc/bind/db.inversa.lan
