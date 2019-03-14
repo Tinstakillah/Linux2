@@ -1,0 +1,48 @@
+DRECTA
+;
+; BIND data file for local loopback interface
+;
+$TTL 604800
+@ IN SOA marc.lan. root.marc.lan. (
+2 ; Serial
+604800 ; Refresh
+86400 ; Retry
+2419200 ; Expire
+604800 ) ; Negative Cache TTL
+;
+@ IN NS marc.lan.
+@ IN A 10.1.6.47
+marc.lan. IN MX 10 correo.marc.lan
+correo IN A 10.1.6.47
+www IN A 10.1.6.47
+ssh IN CNAME www
+INVERSA
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL 604800
+@ IN SOA marc.lan. root.marc.lan. (
+1 ; Serial
+604800 ; Refresh
+86400 ; Retry
+2419200 ; Expire
+604800 ) ; Negative Cache TTL
+;
+@ IN NS marc.lan.
+47 IN PTR marc.lan.
+47 IN PTR correo.marc.lan
+47 IN PTR www.marc.lan.
+47 IN PTR ssh.marc.lan.
+NAMED CONF
+zone "marc.lan"{
+type master;
+file "/etc/bind/db.marc.lan";
+allow-query {127.0.0.1; 10.1.6.0/24;};
+};
+zone "6.1.10.in-addr.arpa"{
+type master;
+file "/etc/bind/db.inversa.lan";
+allow-query {127.0.0.1; 10.1.6.0/24;};
+};
+
+systemctl restart bind9
