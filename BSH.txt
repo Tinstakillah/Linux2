@@ -1,0 +1,23 @@
+awk -F : '{print "nom" $1}' cuando ve los : para
+GREP
+'^ras' busca todo lo que empieza por ras
+-v 'ras' NO contenga ras
+-c 'ras' conta cunats ras hi ha al fitxer
+[01] lineas que contengan 0 o 1 (en teoria)
+'.sh$' final de cadena
+'^..a' donde la tercera letra sea a
+-n muestra el numero de linia donde se encuentra lo buscado
+-i no distinge mayus i minus
+
+FIND muestra subdirectorios
+find /usr/share/*bash* que contenga la palabra bash en ese ddirectorio
+
+CUT
+find /home/ras/shell | cut -d '/' -f 5 | grep ^.0 corta las barras i hace el grep
+
+LS
+ls /home/ras/shell/??p* segon caracter directori
+
+SED
+sed -i "1,3d" /home/ras/tmp esborra les 3 primeres linies 1=empezar por la linia 1
+sed 's/*o$/***/' tmp
